@@ -7,6 +7,10 @@ public class C1DTO {
 
     List<C2DTO> listOfC2 = new ArrayList<>();
 
+    public C1DTO() {
+    //??
+    }
+
     public C1DTO(List<C2DTO> listOfC2) {
         this.listOfC2 = listOfC2;
     }

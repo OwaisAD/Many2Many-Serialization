@@ -33,7 +33,7 @@ public class Demo {
         // lav constructor ala: C2DTO(C2 c2) that changes references to C1DTOs to be strings
         C1DTO c1DTO = new C1DTO(c1);
 
-        String gsonString = gson.toJson(c1DTO);
+        String gsonString = gson.toJson(new C1DTO(c1));
         System.out.println(gsonString);
     }
 
@@ -41,7 +41,7 @@ public class Demo {
         C3 c3 = new C3(1, "C3_1");
         c3.addC4(new C4(1, "C4_1"));
         c3.addC4(new C4(2, "C4_2"));
-        String gsonString = gson.toJson(c3);
+        String gsonString = gson.toJson(c3); // ??
         System.out.println(gsonString);
     }
 
