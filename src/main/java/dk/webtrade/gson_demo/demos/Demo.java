@@ -16,7 +16,7 @@ public class Demo {
 
     public static void main(String[] args) {
         serializeList();
-//        serializeSet();
+        //serializeSet();
     }
 
     public static void serializeList(){
@@ -44,8 +44,6 @@ public class Demo {
         String gsonString = gson.toJson(c3);
         System.out.println(gsonString);
     }
-
-
 
 
 
