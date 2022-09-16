@@ -15,8 +15,8 @@ public class Demo {
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static void main(String[] args) {
-        serializeList();
-        //serializeSet();
+        //serializeList();
+        serializeSet();
     }
 
     public static void serializeList(){
@@ -41,7 +41,10 @@ public class Demo {
         C3 c3 = new C3(1, "C3_1");
         c3.addC4(new C4(1, "C4_1"));
         c3.addC4(new C4(2, "C4_2"));
-        String gsonString = gson.toJson(c3); // ??
+
+        C3DTO c3DTO = new C3DTO(c3);
+
+        String gsonString = gson.toJson(c3DTO); // ??
         System.out.println(gsonString);
     }
 
@@ -204,8 +207,8 @@ public class Demo {
         @Override
         public String toString() {
             return "C2DTO{" +
-                    "id=" + id +
-                    ", name='" + name + '\'' +
+                    "id" + id +
+                    ", name'" + name + '\'' +
                     '}';
         }
     }
@@ -245,6 +248,11 @@ public class Demo {
             if(!c4.getC3s().contains(this))
                 c4.addC3(this);
         }
+
+        @Override
+        public String toString() {
+            return "C3 - id: "+ id +" name: " + name;
+        }
     }
     private static class C4 {
         int id;
@@ -280,6 +288,99 @@ public class Demo {
             this.c3s.add(c3);
             if(!c3.getC4s().contains(this))
                 c3.addC4(this);
+        }
+
+
+
+    }
+
+    private static class C3DTO {
+        int id;
+        String name;
+        Set<C4DTO> C4DTOs = new HashSet();
+
+        public C3DTO(C3 c3) {
+            this.id = c3.getId();
+            this.name = c3.getName();
+            this.C4DTOs = c3.getC4s().stream().map(C4DTO::new).collect(Collectors.toSet());
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Set<C4DTO> getC4DTOs() {
+            return C4DTOs;
+        }
+
+        public void addC4(C4DTO c4dto) {
+            this.C4DTOs.add(c4dto);
+        }
+
+        @Override
+        public String toString() {
+            return "C3DTO{" +
+                    "id" + id +
+                    ", name" + name + '\'' +
+                    ", C4DTOs" + C4DTOs +
+                    '}';
+        }
+    }
+
+    private static class C4DTO {
+        int id;
+        String name;
+        Set<String> C3DTOs = new HashSet<>();
+
+        public C4DTO(C4 c4) {
+            this.id = c4.getId();
+            this.name = c4.getName();
+            this.C3DTOs = c4.getC3s().stream().map(C3::toString).collect(Collectors.toSet());
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Set<String> getC3DTOs() {
+            return C3DTOs;
+        }
+
+        public void addC3DTO(C3DTO c3) {
+            this.C3DTOs.add(c3.toString());
+        }
+
+        @Override
+        public String toString() {
+            return "C4DTO{" +
+                    "id" + id +
+                    ", name" + name + '\'' +
+                    ", C3DTOs" + C3DTOs +
+                    '}';
         }
     }
 }
